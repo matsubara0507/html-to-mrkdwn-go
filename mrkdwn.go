@@ -1,21 +1,19 @@
 package mrkdwn
 
 import (
-	"bytes"
-
-	"github.com/mattn/godown"
+	md "github.com/JohannesKaufmann/html-to-markdown"
 )
 
 type Mrkdwn struct {
-	text []byte
+	text string
 	image []string
 }
 
-func FromHTML(html []byte) (*Mrkdwn, error) {
-	var buf bytes.Buffer
-	err := godown.Convert(&buf, bytes.NewBuffer(html), nil)
+func FromHTML(html string) (*Mrkdwn, error) {
+	converter := md.NewConverter("", true, nil)
+	markdown, err := converter.ConvertString(html)
 	if err != nil {
 		return nil, err
 	}
-	return &Mrkdwn{buf.Bytes(), nil}, nil
+	return &Mrkdwn{markdown, nil}, nil
 }

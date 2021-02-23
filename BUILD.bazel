@@ -14,7 +14,7 @@ go_library(
     srcs = ["mrkdwn.go"],
     importpath = "github.com/matsubara0507/html-to-mrkdwn-go",
     visibility = ["//visibility:public"],
-    deps = ["//vendor/github.com/mattn/godown"],
+    deps = ["//vendor/github.com/JohannesKaufmann/html-to-markdown"],
 )
 
 go_test(

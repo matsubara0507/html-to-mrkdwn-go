@@ -25,12 +25,12 @@ func TestFromHTML(t *testing.T) {
 			continue
 		}
 		t.Run(path, func(t *testing.T) {
-			md, err := FromHTML([]byte(fs[0]))
+			md, err := FromHTML(fs[0])
 			if err != nil {
 				t.Errorf("%v", err)
 				return
 			}
-			actual := strings.Trim(string(md.text), " \t\n")
+			actual := strings.Trim(md.text, " \t\n")
 			expect := strings.Trim(fs[1], " \t\n")
 			if !strings.EqualFold(actual, expect) {
 				t.Errorf("\nexpected:\n%s\nbut actual:\n%s", expect, actual)
