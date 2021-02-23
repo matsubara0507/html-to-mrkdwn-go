@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "html-to-markdown",
+    srcs = [
+        "commonmark.go",
+        "from.go",
+        "markdown.go",
+        "utils.go",
+    ],
+    importmap = "github.com/matsubara0507/html-to-mrkdwn-go/vendor/github.com/JohannesKaufmann/html-to-markdown",
+    importpath = "github.com/JohannesKaufmann/html-to-markdown",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/JohannesKaufmann/html-to-markdown/escape",
+        "//vendor/github.com/PuerkitoBio/goquery",
+        "//vendor/golang.org/x/net/html",
+    ],
+)

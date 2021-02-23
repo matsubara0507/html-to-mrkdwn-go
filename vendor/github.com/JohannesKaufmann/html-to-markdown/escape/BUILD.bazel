@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "escape",
+    srcs = ["escape.go"],
+    importmap = "github.com/matsubara0507/html-to-mrkdwn-go/vendor/github.com/JohannesKaufmann/html-to-markdown/escape",
+    importpath = "github.com/JohannesKaufmann/html-to-markdown/escape",
+    visibility = ["//visibility:public"],
+)

@@ -14,7 +14,11 @@ go_library(
     srcs = ["mrkdwn.go"],
     importpath = "github.com/matsubara0507/html-to-mrkdwn-go",
     visibility = ["//visibility:public"],
-    deps = ["//vendor/github.com/JohannesKaufmann/html-to-markdown"],
+    deps = [
+        "//vendor/github.com/JohannesKaufmann/html-to-markdown",
+        "//vendor/github.com/JohannesKaufmann/html-to-markdown/plugin",
+        "//vendor/github.com/PuerkitoBio/goquery",
+    ],
 )
 
 go_test(

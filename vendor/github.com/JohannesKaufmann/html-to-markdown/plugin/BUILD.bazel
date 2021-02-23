@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "plugin",
+    srcs = [
+        "confluence_attachment_block.go",
+        "confluence_code_block.go",
+        "frontmatter.go",
+        "gfm.go",
+        "strikethrough.go",
+        "table.go",
+        "task_list.go",
+        "vimeo.go",
+        "youtube.go",
+    ],
+    importmap = "github.com/matsubara0507/html-to-mrkdwn-go/vendor/github.com/JohannesKaufmann/html-to-markdown/plugin",
+    importpath = "github.com/JohannesKaufmann/html-to-markdown/plugin",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/JohannesKaufmann/html-to-markdown",
+        "//vendor/github.com/PuerkitoBio/goquery",
+        "//vendor/gopkg.in/yaml.v2:yaml_v2",
+    ],
+)
