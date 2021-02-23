@@ -1,0 +1,3 @@
+build --stamp --host_force_python=PY2
+test --stamp --host_force_python=PY2 --test_output=errors
+run --stamp --host_force_python=PY2

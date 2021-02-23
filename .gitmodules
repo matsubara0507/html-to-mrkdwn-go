@@ -1,0 +1,3 @@
+[submodule "html-to-mrkdwn"]
+	path = html-to-mrkdwn
+	url = https://github.com/integrations/html-to-mrkdwn.git

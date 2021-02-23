@@ -1,0 +1,8 @@
+# github.com/mattn/go-runewidth v0.0.8
+github.com/mattn/go-runewidth
+# github.com/mattn/godown v0.0.1
+## explicit
+github.com/mattn/godown
+# golang.org/x/net v0.0.0-20200202094626-16171245cfb2
+golang.org/x/net/html
+golang.org/x/net/html/atom
