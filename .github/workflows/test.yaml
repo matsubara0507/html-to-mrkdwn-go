@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  pull_request: null
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Cache Bazel
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/bazel
+          key: ${{ runner.os }}-${{ hashFiles('WORKSPACE') }}
+
+      - name: Run test
+        run: bazelisk test //...
