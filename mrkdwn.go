@@ -13,8 +13,8 @@ import (
 )
 
 type Mrkdwn struct {
-	text  string
-	image string
+	Text  string
+	Image string
 }
 
 func FromHTML(html string) (*Mrkdwn, error) {

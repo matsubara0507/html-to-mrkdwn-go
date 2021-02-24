@@ -30,7 +30,7 @@ func TestFromHTML(t *testing.T) {
 				t.Errorf("%v", err)
 				return
 			}
-			actual := strings.Trim(md.text, " \t\n")
+			actual := strings.Trim(md.Text, " \t\n")
 			expect := strings.Trim(fs[1], " \t\n")
 			if !strings.EqualFold(actual, expect) {
 				t.Errorf("\nexpected:\n%s\nbut actual:\n%s", expect, actual)
@@ -50,8 +50,8 @@ func TestFromHTML(t *testing.T) {
 			return
 		}
 		expect := "https://example.com/first.gif"
-		if !strings.EqualFold(md.image, expect) {
-			t.Errorf("expected %s, but acutual %s", expect, md.image)
+		if !strings.EqualFold(md.Image, expect) {
+			t.Errorf("expected %s, but acutual %s", expect, md.Image)
 		}
 	})
 }
