@@ -37,4 +37,21 @@ func TestFromHTML(t *testing.T) {
 			}
 		})
 	}
+
+	html := `
+		<p><strong>Hello</strong> <a href="https://example.com">cruel</a> <em>world</em>!</p>
+		<p><img src="https://example.com/first.gif"></p>
+		<p><img src="https://example.com/secon.gif"></p>
+	`
+	t.Run("return images", func(t *testing.T) {
+		md, err := FromHTML(html)
+		if err != nil {
+			t.Errorf("%v", err)
+			return
+		}
+		expect := "https://example.com/first.gif"
+		if !strings.EqualFold(md.image, expect) {
+			t.Errorf("expected %s, but acutual %s", expect, md.image)
+		}
+	})
 }

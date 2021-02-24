@@ -14,7 +14,7 @@ import (
 
 type Mrkdwn struct {
 	text  string
-	image []string
+	image string
 }
 
 func FromHTML(html string) (*Mrkdwn, error) {
@@ -27,7 +27,13 @@ func FromHTML(html string) (*Mrkdwn, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Mrkdwn{markdown, nil}, nil
+
+	image, err := FirstImage(html)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Mrkdwn{markdown, image}, nil
 }
 
 func SlackPlugin() md.Plugin {
@@ -267,4 +273,17 @@ func SlackImagesRule() md.Rule {
 			return nil
 		},
 	}
+}
+
+func FirstImage(html string) (string, error) {
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
+	if err != nil {
+		return "", err
+	}
+	if img := doc.Find("img"); img != nil {
+		if src, ok := img.Attr("src"); ok {
+			return src, nil
+		}
+	}
+	return "", nil
 }
