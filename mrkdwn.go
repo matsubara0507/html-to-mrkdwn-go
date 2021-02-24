@@ -13,7 +13,7 @@ import (
 )
 
 type Mrkdwn struct {
-	text string
+	text  string
 	image []string
 }
 
@@ -229,9 +229,9 @@ func SlackListItemRule() md.Rule {
 				index := selec.Index()
 				if start, ok := parent.Attr("start"); ok {
 					startIndex, _ := strconv.Atoi(start)
-					prefix = strconv.Itoa(startIndex + index) + ". "
+					prefix = strconv.Itoa(startIndex+index) + ". "
 				} else {
-					prefix = strconv.Itoa(index + 1) + ". "
+					prefix = strconv.Itoa(index+1) + ". "
 				}
 			}
 			suffix := "\n"
@@ -268,4 +268,3 @@ func SlackImagesRule() md.Rule {
 		},
 	}
 }
-
