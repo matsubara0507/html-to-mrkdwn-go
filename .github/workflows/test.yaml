@@ -24,3 +24,6 @@ jobs:
 
       - name: Run test
         run: bazelisk test //...
+
+      - name: Run example
+        run: bazelisk run //example

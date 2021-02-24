@@ -1,10 +1,3 @@
-# html-to-mrkdwn-go
-
-[![Test](https://github.com/matsubara0507/html-to-mrkdwn-go/actions/workflows/test.yaml/badge.svg)](https://github.com/matsubara0507/html-to-mrkdwn-go/actions/workflows/test.yaml)
-
-Convert HTML to Slack's [mrkdwn](https://api.slack.com/docs/message-formatting) format.
-
-```go
 package main
 
 import (
@@ -27,6 +20,3 @@ func main() {
 	//
 	// https://media.giphy.com/media/5xtDarEbygs3Pu7p3jO/giphy.gif
 }
-```
-
-This package is greatly inspired by [html-to-mrkdwn](https://www.npmjs.com/package/html-to-mrkdwn) npm package.

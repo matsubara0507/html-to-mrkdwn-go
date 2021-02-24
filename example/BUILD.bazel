@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/matsubara0507/html-to-mrkdwn-go/example
+gazelle(name = "gazelle")
+
+go_library(
+    name = "example_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/matsubara0507/html-to-mrkdwn-go/example",
+    visibility = ["//visibility:private"],
+    deps = ["//:html-to-mrkdwn-go"],
+)
+
+go_binary(
+    name = "example",
+    embed = [":example_lib"],
+    visibility = ["//visibility:public"],
+)
