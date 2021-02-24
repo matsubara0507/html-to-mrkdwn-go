@@ -1,3 +1,9 @@
 build --stamp --host_force_python=PY2
 test --stamp --host_force_python=PY2 --test_output=errors
 run --stamp --host_force_python=PY2
+
+build:ci --loading_phase_threads=1
+build:ci --jobs=2
+build:ci --verbose_failures
+common:ci --color=no
+test:ci --test_output=errors
