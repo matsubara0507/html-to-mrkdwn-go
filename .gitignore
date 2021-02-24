@@ -13,3 +13,8 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+bazel-bin
+bazel-html-to-mrkdwn-go
+bazel-out
+bazel-testlogs
