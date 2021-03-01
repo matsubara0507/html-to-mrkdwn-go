@@ -13,7 +13,7 @@ func TestFromHTML(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	for _, path := range paths {
+	for _, path := range append(paths, "fixtures/sample.mrkdwn") {
 		file, err := ioutil.ReadFile(path)
 		if err != nil {
 			_ = fmt.Errorf("can't read fixture: %s, %v", path, err)

@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 
 	md "github.com/JohannesKaufmann/html-to-markdown"
@@ -16,6 +17,12 @@ type Mrkdwn struct {
 	Text  string
 	Image string
 }
+
+var (
+	multipleSpacesR = regexp.MustCompile(`  +`)
+	tabR = regexp.MustCompile(`\t+`)
+)
+
 
 func FromHTML(html string) (*Mrkdwn, error) {
 	converter := md.NewConverter("", false, nil)
@@ -41,7 +48,6 @@ func SlackPlugin() md.Plugin {
 		rules = CommonmarkRules()
 		rules = append(rules, SlackLinkRule())
 		rules = append(rules, SlackHeadingRule())
-		rules = append(rules, SlackCheckbox())
 		rules = append(rules, SlackListItemRule())
 		rules = append(rules, SlackImagesRule())
 		return
@@ -57,8 +63,39 @@ func CommonmarkRules() (rules []md.Rule) {
 			if trimmed := strings.TrimSpace(text); trimmed == "" {
 				return md.String("")
 			}
+			text = tabR.ReplaceAllString(text, " ")
+
+			// replace multiple spaces by one space: dont accidentally make
+			// normal text be indented and thus be a code block.
+			text = multipleSpacesR.ReplaceAllString(text, " ")
 
 			return &text
+		},
+	})
+	rules = append(rules, md.Rule{
+		Filter: []string{"ul", "ol"},
+		Replacement: func(content string, selec *goquery.Selection, opt *md.Options) *string {
+			parent := selec.Parent()
+
+			// we have a nested list, were the ul/ol is inside a list item
+			// -> based on work done by @requilence from @anytypeio
+			if parent.Is("li") && parent.Children().Last().IsSelection(selec) {
+				// add a line break prefix if the parent's text node doesn't have it.
+				// that makes sure that every list item is on its on line
+				lastContentTextNode := strings.TrimRight(parent.Nodes[0].FirstChild.Data, " \t")
+				if !strings.HasSuffix(lastContentTextNode, "\n") {
+					content = "\n" + content
+				}
+
+				// remove empty lines between lists
+				trimmedSpaceContent := strings.TrimRight(content, " \t")
+				if strings.HasSuffix(trimmedSpaceContent, "\n") {
+					content = strings.TrimRightFunc(content, unicode.IsSpace)
+				}
+			} else {
+				content = "\n\n" + content + "\n\n"
+			}
+			return &content
 		},
 	})
 	rules = append(rules, md.Rule{
@@ -73,7 +110,7 @@ func CommonmarkRules() (rules []md.Rule) {
 			// remove unnecessary spaces to have clean markdown
 			content = md.TrimpLeadingSpaces(content)
 
-			content = "\n" + content + "\n"
+			content = "\n\n" + content + "\n\n"
 			return &content
 		},
 	})
@@ -205,22 +242,6 @@ func SlackHeadingRule() md.Rule {
 	}
 }
 
-func SlackCheckbox() md.Rule {
-	return md.Rule{
-		Filter: []string{"input"},
-		Replacement: func(content string, selec *goquery.Selection, options *md.Options) *string {
-			if selec.HasClass("task-list-item-checkbox") {
-				if _, ok := selec.Attr("checked"); ok {
-					return md.String("☑︎")
-				} else {
-					return md.String("☐")
-				}
-			}
-			return &content
-		},
-	}
-}
-
 func SlackListItemRule() md.Rule {
 	return md.Rule{
 		Filter: []string{"li"},
@@ -229,7 +250,15 @@ func SlackListItemRule() md.Rule {
 			prefix := "• " // without BulletListMarker for validateOptions
 			parent := selec.Parent()
 			if selec.HasClass("task-list-item") {
-				prefix = ""
+				if checkbox := selec.Children().First(); checkbox != nil {
+					if _, ok := checkbox.Attr("checked"); ok {
+						prefix = "☑︎ "
+					} else {
+						prefix = "☐ "
+					}
+				} else {
+					prefix = ""
+				}
 			}
 			if parent != nil && goquery.NodeName(parent) == "ol" {
 				index := selec.Index()

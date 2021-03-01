@@ -6,7 +6,9 @@ gazelle(name = "gazelle")
 
 filegroup(
     name = "fixtures",
-    srcs = glob(["html-to-mrkdwn/test/fixtures/*.mrkdwn"]),
+    srcs = glob(["html-to-mrkdwn/test/fixtures/*.mrkdwn"]) + [
+        "fixtures/sample.mrkdwn",
+    ],
 )
 
 go_library(
