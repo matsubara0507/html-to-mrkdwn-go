@@ -1,6 +1,8 @@
 # html-to-mrkdwn-go
 
 [![Test](https://github.com/matsubara0507/html-to-mrkdwn-go/actions/workflows/test.yaml/badge.svg)](https://github.com/matsubara0507/html-to-mrkdwn-go/actions/workflows/test.yaml)
+[![Go Reference](https://pkg.go.dev/badge/matsubara0507/html-to-mrkdwn-go.svg)](https://pkg.go.dev/matsubara0507/html-to-mrkdwn-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/matsubara0507/html-to-mrkdwn-go)](https://goreportcard.com/report/github.com/matsubara0507/html-to-mrkdwn-go)
 
 Convert HTML to Slack's [mrkdwn](https://api.slack.com/docs/message-formatting) format.
 
