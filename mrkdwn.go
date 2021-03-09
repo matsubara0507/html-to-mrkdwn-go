@@ -20,9 +20,8 @@ type Mrkdwn struct {
 
 var (
 	multipleSpacesR = regexp.MustCompile(`  +`)
-	tabR = regexp.MustCompile(`\t+`)
+	tabR            = regexp.MustCompile(`\t+`)
 )
-
 
 func FromHTML(html string) (*Mrkdwn, error) {
 	converter := md.NewConverter("", false, nil)
