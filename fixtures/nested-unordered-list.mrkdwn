@@ -1,0 +1,8 @@
+<ul><li>item 1<ol><li>child item 1<ul><li>child child item 1</li><li>child child item 2</li></ul></li><li>child item 2</li></ol></li><li>item 2</li></ul>
+====
+• item 1
+  1. child item 1
+    • child child item 1
+    • child child item 2
+  2. child item 2
+• item 2

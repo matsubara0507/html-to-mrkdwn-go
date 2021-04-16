@@ -272,6 +272,19 @@ func SlackListItemRule() md.Rule {
 			if nil == selec.Next() {
 				suffix = ""
 			}
+
+			// count nested list
+			nest := 0
+			for ; selec != nil && !isRootNode(parent); parent = parent.Parent() {
+				nodeName := goquery.NodeName(parent)
+				if nodeName == "ul" || nodeName == "ol" {
+					nest += 1
+				}
+			}
+			if nest > 0 {
+				prefix = strings.Repeat("  ", nest - 1) + prefix
+			}
+
 			return md.String(prefix + strings.Trim(content, " \t\n") + suffix)
 		},
 	}
@@ -314,4 +327,9 @@ func FirstImage(html string) (string, error) {
 		}
 	}
 	return "", nil
+}
+
+func isRootNode(selec *goquery.Selection) bool {
+	nodeName := goquery.NodeName(selec)
+	return nodeName == "" || nodeName == "html" || nodeName == "doc"
 }

@@ -9,11 +9,15 @@ import (
 )
 
 func TestFromHTML(t *testing.T) {
-	paths, err := filepath.Glob("html-to-mrkdwn/test/fixtures/*.mrkdwn")
-	if err != nil {
-		panic(err)
+	fixturePaths := make([]string, 0)
+	for _, fixturesDir := range []string{"html-to-mrkdwn/test/fixtures/*.mrkdwn", "fixtures/*.mrkdwn"} {
+		paths, err := filepath.Glob(fixturesDir)
+		if err != nil {
+			panic(err)
+		}
+		fixturePaths = append(fixturePaths, paths...)
 	}
-	for _, path := range append(paths, "fixtures/sample.mrkdwn") {
+	for _, path := range fixturePaths {
 		file, err := ioutil.ReadFile(path)
 		if err != nil {
 			_ = fmt.Errorf("can't read fixture: %s, %v", path, err)
