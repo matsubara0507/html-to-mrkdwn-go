@@ -6,9 +6,7 @@ gazelle(name = "gazelle")
 
 filegroup(
     name = "fixtures",
-    srcs = glob(["html-to-mrkdwn/test/fixtures/*.mrkdwn"]) + [
-        "fixtures/sample.mrkdwn",
-    ],
+    srcs = glob(["html-to-mrkdwn/test/fixtures/*.mrkdwn"]) + glob(["fixtures/*.mrkdwn"]),
 )
 
 go_library(
@@ -20,6 +18,8 @@ go_library(
         "//vendor/github.com/JohannesKaufmann/html-to-markdown",
         "//vendor/github.com/JohannesKaufmann/html-to-markdown/plugin",
         "//vendor/github.com/PuerkitoBio/goquery",
+        "//vendor/golang.org/x/net/html",
+        "//vendor/golang.org/x/net/html/atom",
     ],
 )
 
