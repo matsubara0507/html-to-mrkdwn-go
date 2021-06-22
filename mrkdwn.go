@@ -282,7 +282,7 @@ func SlackListItemRule() md.Rule {
 				}
 			}
 			if nest > 0 {
-				prefix = strings.Repeat("  ", nest - 1) + prefix
+				prefix = strings.Repeat("    ", nest - 1) + prefix
 			}
 
 			return md.String(prefix + strings.Trim(content, " \t\n") + suffix)
